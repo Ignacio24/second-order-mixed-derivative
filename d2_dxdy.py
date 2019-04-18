@@ -21,7 +21,6 @@ def local_submatrix(A, r, c, SF=2):
 	SF smooth factor
 	(2*SF+1, 2*SF+1) shape of matrix
 	'''
-			
 	return A[r-SF:r+SF+1 , c-SF: c+SF+1] # 
 	
 def dcentral5pts(y, h):
@@ -36,7 +35,6 @@ def _2ndMixedDerivative(X, Y, Z, SF=2):
 	dy = []
 	dz = []
 	for i in np.arange(SF, rows-SF):
-	
 		for j in np.arange(SF, cols-SF):
 			Xs = local_submatrix(X, i, j)
 			Ys = local_submatrix(Y, i, j)
@@ -95,7 +93,6 @@ def mesh_M(Ha, Hb, M, extended=False):
 			if aux:
 				Mmesh[i][j] = aux
 			j += 1
-	
 		i += 1
 	
 	return Ha_grid, Hb_grid, Mmesh
@@ -141,15 +138,11 @@ if __name__ == "__main__":
 	d2z_grid = function_d2Fdxdy(x_grid, y_grid)
 	ax2.plot_surface(x_grid,y_grid,d2z_grid)#, c=z_grid)
 	
-	
-	
 	print('Calculating Second mixed derivative...', end=" " )
-	
+	d_x, d_y, d_z = _2ndMixedDerivative(x_grid, y_grid, z_grid)
 	print("> Done.")
 	#print("lenssss", len(datP), len(datP[0]))
 	
-	#dxgrid, dygrid, dzgrid = mesh_M(datP[:,0], datP[:,1], datP[:,2])
-	d_x, d_y, d_z = _2ndMixedDerivative(x_grid, y_grid, z_grid)
 	dxgrid, dygrid, dzgrid = mesh_M(d_x, d_y, d_z)
 	
 	fig = plt.figure("Numerical 2nd ord mix deriv")
